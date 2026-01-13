@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@fontsource/cinzel/400.css';
+@import '@fontsource/cinzel/700.css';
+@import '@fontsource/source-sans-3/400.css';
+@import '@fontsource/source-sans-3/600.css';
+
+/* Pride of Jhansi - Design System
+   Historical Indian aesthetic: saffron, indigo, parchment, stone, brass
+*/
+
+@layer base {
+  :root {
+    /* Core palette - 1857 India inspired */
+    --background: 36 33% 94%;
+    --foreground: 25 25% 15%;
+
+    --card: 38 40% 90%;
+    --card-foreground: 25 25% 15%;
+
+    --popover: 38 35% 88%;
+    --popover-foreground: 25 25% 15%;
+
+    /* Saffron - Primary brand color */
+    --primary: 25 100% 50%;
+    --primary-foreground: 38 40% 96%;
+
+    /* Royal Indigo - Secondary */
+    --secondary: 260 55% 26%;
+    --secondary-foreground: 38 40% 96%;
+
+    /* Parchment - Muted surfaces */
+    --muted: 40 35% 88%;
+    --muted-foreground: 25 20% 40%;
+
+    /* Brass Gold - Accents */
+    --accent: 43 70% 47%;
+    --accent-foreground: 25 25% 10%;
+
+    /* Stone Gray - Borders and structure */
+    --stone: 30 15% 35%;
+    --stone-light: 30 12% 55%;
+    --stone-dark: 30 18% 22%;
+
+    /* Status colors */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --success: 142 70% 35%;
+    --success-foreground: 0 0% 100%;
+    
+    --warning: 38 92% 50%;
+    --warning-foreground: 25 25% 10%;
+
+    /* Game-specific colors */
+    --friendly: 210 80% 50%;
+    --enemy: 0 75% 50%;
+    --civilian: 45 80% 55%;
+    --hero-glow: 43 100% 60%;
+
+    --border: 30 20% 75%;
+    --input: 38 30% 85%;
+    --ring: 25 100% 50%;
+
+    --radius: 0.375rem;
+
+    /* Gradients */
+    --gradient-sunset: linear-gradient(135deg, hsl(25 100% 50%) 0%, hsl(35 90% 55%) 50%, hsl(280 40% 30%) 100%);
+    --gradient-parchment: linear-gradient(180deg, hsl(38 40% 92%) 0%, hsl(36 35% 85%) 100%);
+    --gradient-wood: linear-gradient(180deg, hsl(25 30% 25%) 0%, hsl(25 35% 18%) 100%);
+    --gradient-brass: linear-gradient(135deg, hsl(43 70% 55%) 0%, hsl(38 60% 40%) 100%);
+    --gradient-sky-dawn: linear-gradient(180deg, hsl(35 60% 70%) 0%, hsl(25 80% 65%) 30%, hsl(200 40% 75%) 100%);
+    --gradient-sky-dusk: linear-gradient(180deg, hsl(280 40% 25%) 0%, hsl(25 70% 50%) 50%, hsl(35 80% 60%) 100%);
+
+    /* Shadows */
+    --shadow-wood: 0 4px 12px hsl(25 30% 15% / 0.4);
+    --shadow-card: 0 2px 8px hsl(25 20% 20% / 0.15);
+    --shadow-glow: 0 0 20px hsl(43 100% 60% / 0.5);
+
+    /* Sidebar (unused but required) */
+    --sidebar-background: 36 33% 94%;
+    --sidebar-foreground: 25 25% 15%;
+    --sidebar-primary: 25 100% 50%;
+    --sidebar-primary-foreground: 38 40% 96%;
+    --sidebar-accent: 43 70% 47%;
+    --sidebar-accent-foreground: 25 25% 10%;
+    --sidebar-border: 30 20% 75%;
+    --sidebar-ring: 25 100% 50%;
+  }
+
+  .dark {
+    --background: 25 25% 8%;
+    --foreground: 38 30% 90%;
+
+    --card: 25 20% 12%;
+    --card-foreground: 38 30% 90%;
+
+    --popover: 25 20% 10%;
+    --popover-foreground: 38 30% 90%;
+
+    --primary: 25 100% 55%;
+    --primary-foreground: 25 25% 8%;
+
+    --secondary: 260 45% 35%;
+    --secondary-foreground: 38 30% 90%;
+
+    --muted: 25 15% 18%;
+    --muted-foreground: 38 20% 60%;
+
+    --accent: 43 75% 50%;
+    --accent-foreground: 25 25% 8%;
+
+    --stone: 30 10% 45%;
+    --stone-light: 30 8% 60%;
+    --stone-dark: 30 15% 15%;
+
+    --border: 25 15% 25%;
+    --input: 25 15% 20%;
+    --ring: 25 100% 55%;
+
+    --sidebar-background: 25 25% 8%;
+    --sidebar-foreground: 38 30% 90%;
+    --sidebar-primary: 25 100% 55%;
+    --sidebar-primary-foreground: 25 25% 8%;
+    --sidebar-accent: 43 75% 50%;
+    --sidebar-accent-foreground: 25 25% 8%;
+    --sidebar-border: 25 15% 25%;
+    --sidebar-ring: 25 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+@layer components {
+  .font-display {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+  }
+
+  /* Wood panel styling */
+  .wood-panel {
+    background: var(--gradient-wood);
+    border: 2px solid hsl(var(--stone));
+    box-shadow: var(--shadow-wood);
+  }
+
+  /* Parchment paper effect */
+  .parchment {
+    background: var(--gradient-parchment);
+    border: 1px solid hsl(var(--stone-light));
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Brass button styling */
+  .brass-button {
+    background: var(--gradient-brass);
+    border: 2px solid hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    text-shadow: 0 1px 0 hsl(var(--accent) / 0.3);
+  }
+
+  /* Hero glow effect */
+  .hero-glow {
+    box-shadow: var(--shadow-glow);
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  /* Indian ornamental border */
+  .ornate-border {
+    border: 3px solid hsl(var(--accent));
+    background-image: 
+      linear-gradient(45deg, hsl(var(--accent)) 25%, transparent 25%),
+      linear-gradient(-45deg, hsl(var(--accent)) 25%, transparent 25%);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 0;
+    background-clip: padding-box;
+  }
+
+  /* Resource warning pulse */
+  .resource-warning {
+    animation: warning-pulse 1s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(43 100% 60% / 0.5);
+    }
+    50% {
+      box-shadow: 0 0 35px hsl(43 100% 60% / 0.8);
+    }
+  }
+
+  @keyframes warning-pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes float-damage {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+  }
+
+  @keyframes cannon-shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  .animate-float-damage {
+    animation: float-damage 0.8s ease-out forwards;
+  }
+
+  .animate-cannon-shake {
+    animation: cannon-shake 0.15s ease-in-out;
+  }
+}
