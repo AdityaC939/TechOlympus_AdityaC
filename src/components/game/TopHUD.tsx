@@ -51,7 +51,7 @@ export const TopHUD = ({ state }: TopHUDProps) => {
         </div>
       </div>
 
-      {/* Resources */}
+      {/* Resources & Morale */}
       <div className="flex items-center gap-6">
         {/* Ammunition */}
         <div className={`flex items-center gap-2 ${isLowAmmo ? 'resource-warning' : ''}`}>
@@ -83,6 +83,30 @@ export const TopHUD = ({ state }: TopHUDProps) => {
             <p className={`font-bold text-lg ${isLowMedical ? 'text-destructive' : ''}`}>
               {state.resources.medical}
             </p>
+          </div>
+        </div>
+
+        {/* Morale */}
+        <div className="flex items-center gap-2 min-w-[140px]">
+          <span className="text-xl">🚩</span>
+          <div className="flex-1">
+            <p className="text-xs text-primary-foreground opacity-70 mb-1">Morale</p>
+            <div className="h-3 bg-stone-dark rounded-full overflow-hidden">
+              <motion.div
+                className="h-full rounded-full"
+                style={{
+                  background: state.morale > 50 
+                    ? 'linear-gradient(90deg, hsl(142 70% 35%), hsl(142 70% 45%))' 
+                    : state.morale > 25 
+                      ? 'linear-gradient(90deg, hsl(38 92% 50%), hsl(38 92% 60%))'
+                      : 'linear-gradient(90deg, hsl(0 72% 51%), hsl(0 72% 61%))',
+                }}
+                initial={{ width: 0 }}
+                animate={{ width: `${state.morale}%` }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+            <p className="text-xs text-primary-foreground text-right mt-0.5">{state.morale}%</p>
           </div>
         </div>
       </div>
