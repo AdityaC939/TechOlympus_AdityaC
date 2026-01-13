@@ -13,7 +13,7 @@ export const BottomBar = ({ state, onTogglePause, onSetSpeed }: BottomBarProps) 
     <motion.div
       initial={{ y: 100 }}
       animate={{ y: 0 }}
-      className="wood-panel h-14 flex items-center justify-between px-6 rounded-t-lg border-t-4 border-amber-800/50 shadow-lg"
+      className="wood-panel h-16 flex items-center justify-between px-6 rounded-t-lg border-t-4 border-amber-800/50 shadow-lg relative z-20"
     >
       {/* Left: Action Buttons */}
       <div className="flex items-center gap-3">

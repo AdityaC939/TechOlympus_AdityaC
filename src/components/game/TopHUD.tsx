@@ -21,7 +21,7 @@ export const TopHUD = ({ state }: TopHUDProps) => {
     <motion.div
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="wood-panel h-16 flex items-center justify-between px-6 rounded-b-lg border-b-4 border-amber-800/50 shadow-lg"
+      className="wood-panel h-16 flex items-center justify-between px-6 rounded-b-lg border-b-4 border-amber-800/50 shadow-lg relative z-20"
     >
       {/* Day and Time */}
       <div className="flex items-center gap-3">
@@ -32,13 +32,32 @@ export const TopHUD = ({ state }: TopHUDProps) => {
         </div>
       </div>
 
+      {/* Wave Info & Countdown - Centered */}
+      <div className="flex items-center gap-4">
+        <div className="bg-stone-dark/80 rounded-lg px-4 py-2 flex items-center gap-3 border border-amber-600/50">
+          <div className="text-primary-foreground text-center">
+            <p className="text-xs opacity-70">Wave</p>
+            <p className="font-display font-bold text-lg">{state.wave}/{state.totalWaves}</p>
+          </div>
+          
+          {state.waveCountdown > 0 && state.enemies.length === 0 && (
+            <div className="border-l border-amber-600/50 pl-3">
+              <p className="text-xs text-primary-foreground opacity-70">Next Wave</p>
+              <p className="font-display font-bold text-xl text-warning">
+                {Math.ceil(state.waveCountdown)}s
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* Resources */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-6">
         {/* Ammunition */}
         <div className={`flex items-center gap-2 ${isLowAmmo ? 'resource-warning' : ''}`}>
           <span className="text-xl">🔫</span>
           <div className="text-primary-foreground">
-            <p className="text-xs opacity-70">Ammunition</p>
+            <p className="text-xs opacity-70">Ammo</p>
             <p className={`font-bold text-lg ${isLowAmmo ? 'text-destructive' : ''}`}>
               {state.resources.ammunition}
             </p>
@@ -65,30 +84,6 @@ export const TopHUD = ({ state }: TopHUDProps) => {
               {state.resources.medical}
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* Morale */}
-      <div className="flex items-center gap-3 min-w-[180px]">
-        <span className="text-xl">🚩</span>
-        <div className="flex-1">
-          <p className="text-xs text-primary-foreground opacity-70 mb-1">Morale</p>
-          <div className="h-3 bg-stone-dark rounded-full overflow-hidden">
-            <motion.div
-              className="h-full rounded-full"
-              style={{
-                background: state.morale > 50 
-                  ? 'linear-gradient(90deg, hsl(142 70% 35%), hsl(142 70% 45%))' 
-                  : state.morale > 25 
-                    ? 'linear-gradient(90deg, hsl(38 92% 50%), hsl(38 92% 60%))'
-                    : 'linear-gradient(90deg, hsl(0 72% 51%), hsl(0 72% 61%))',
-              }}
-              initial={{ width: 0 }}
-              animate={{ width: `${state.morale}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-          <p className="text-xs text-primary-foreground text-right mt-0.5">{state.morale}%</p>
         </div>
       </div>
     </motion.div>

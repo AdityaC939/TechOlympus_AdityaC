@@ -10,7 +10,36 @@ export const GameCanvas = ({ state, onPlaceDefender }: GameCanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Pre-generate random positions once using refs to avoid re-computation on each render
+  const randomPositionsRef = useRef<{
+    grass: { x: number; y: number; rx: number; ry: number }[];
+    dirt: { x: number; y: number; r: number; color: string }[];
+    rocks: { x: number; y: number; rx: number; ry: number; rotation: number }[];
+  }>({
+    grass: Array.from({ length: 30 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      rx: 15 + Math.random() * 20,
+      ry: 5 + Math.random() * 8,
+    })),
+    dirt: Array.from({ length: 40 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      r: 3 + Math.random() * 8,
+      color: `rgba(${100 + Math.random() * 40}, ${70 + Math.random() * 30}, ${40 + Math.random() * 20}, 0.4)`,
+    })),
+    rocks: Array.from({ length: 20 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      rx: 4 + Math.random() * 6,
+      ry: 3 + Math.random() * 4,
+      rotation: Math.random() * Math.PI,
+    })),
+  });
+
   const drawFort = useCallback((ctx: CanvasRenderingContext2D, width: number, height: number) => {
+    const randomPositions = randomPositionsRef.current;
+    
     // Sky gradient based on time of day
     const skyGradient = ctx.createLinearGradient(0, 0, 0, height);
     if (state.timeOfDay === 'dawn') {
@@ -40,35 +69,35 @@ export const GameCanvas = ({ state, onPlaceDefender }: GameCanvasProps) => {
     ctx.fillStyle = groundGradient;
     ctx.fillRect(0, groundY, width, height - groundY);
     
-    // Add grass patches near the fort
+    // Add grass patches near the fort (using pre-generated positions)
     ctx.fillStyle = '#5a7a40';
-    for (let i = 0; i < 30; i++) {
-      const grassX = Math.random() * (width - 150);
-      const grassY = groundY + Math.random() * (height - groundY - 50);
+    randomPositions.grass.forEach(pos => {
+      const grassX = pos.x * (width - 150);
+      const grassY = groundY + pos.y * (height - groundY - 50);
       ctx.beginPath();
-      ctx.ellipse(grassX, grassY, 15 + Math.random() * 20, 5 + Math.random() * 8, 0, 0, Math.PI * 2);
+      ctx.ellipse(grassX, grassY, pos.rx, pos.ry, 0, 0, Math.PI * 2);
       ctx.fill();
-    }
+    });
     
-    // Add dirt patches and texture
-    for (let i = 0; i < 40; i++) {
-      const patchX = Math.random() * (width - 120);
-      const patchY = groundY + 20 + Math.random() * (height - groundY - 60);
-      ctx.fillStyle = `rgba(${100 + Math.random() * 40}, ${70 + Math.random() * 30}, ${40 + Math.random() * 20}, 0.4)`;
+    // Add dirt patches and texture (using pre-generated positions)
+    randomPositions.dirt.forEach(pos => {
+      const patchX = pos.x * (width - 120);
+      const patchY = groundY + 20 + pos.y * (height - groundY - 60);
+      ctx.fillStyle = pos.color;
       ctx.beginPath();
-      ctx.arc(patchX, patchY, 3 + Math.random() * 8, 0, Math.PI * 2);
+      ctx.arc(patchX, patchY, pos.r, 0, Math.PI * 2);
       ctx.fill();
-    }
+    });
     
-    // Small rocks scattered on ground
+    // Small rocks scattered on ground (using pre-generated positions)
     ctx.fillStyle = '#6b6b6b';
-    for (let i = 0; i < 20; i++) {
-      const rockX = Math.random() * (width - 150);
-      const rockY = groundY + 30 + Math.random() * (height - groundY - 80);
+    randomPositions.rocks.forEach(pos => {
+      const rockX = pos.x * (width - 150);
+      const rockY = groundY + 30 + pos.y * (height - groundY - 80);
       ctx.beginPath();
-      ctx.ellipse(rockX, rockY, 4 + Math.random() * 6, 3 + Math.random() * 4, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.ellipse(rockX, rockY, pos.rx, pos.ry, pos.rotation, 0, Math.PI * 2);
       ctx.fill();
-    }
+    });
 
     // Draw battle paths/lanes with dirt track appearance
     [150, 270, 390].forEach(y => {
