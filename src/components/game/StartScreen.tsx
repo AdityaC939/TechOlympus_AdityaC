@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import parchmentBg from '@/assets/parchment-bg.png';
 
 interface StartScreenProps {
   onStart: () => void;
@@ -7,11 +8,11 @@ interface StartScreenProps {
 export const StartScreen = ({ onStart }: StartScreenProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background gradient */}
+      {/* Background image */}
       <div 
-        className="absolute inset-0"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          background: 'linear-gradient(135deg, hsl(25 100% 50% / 0.3) 0%, hsl(280 40% 30% / 0.5) 50%, hsl(260 55% 26%) 100%)',
+          backgroundImage: `url(${parchmentBg})`,
         }}
       />
       
